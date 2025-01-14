@@ -5,6 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Контакты - ИЭТР</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .buttons-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .contact-button {
+            width: 150px;
+            height: 150px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .contact-button img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .contact-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -20,27 +46,21 @@
     <main>
         <section class="hero">
             <h1>Контакты</h1>
-            <p>Вы можете связаться 1 с нами через следующие платформы:</p>
+            <p>Свяжитесь с нами через указанные платформы:</p>
         </section>
 
         <section class="buttons-section">
-            <ul>
-                <li>
-                    <a href="https://vk.com/idshash1li4nik" target="_blank">
-                        <img src="VK.png" alt="ВКонтакте" class="contact-icon" />
-                    </a>
-                </li>
-                <li>
-                    <a href="https://t.me/shashIichok" target="_blank">
-                        <img src="TG.png" alt="Telegram" class="contact-icon" />
-                    </a>
-                </li>
-            </ul>
+            <a href="https://vk.com/idshash1li4nik" target="_blank" class="contact-button">
+                <img src="VK.png" alt="ВКонтакте">
+            </a>
+            <a href="https://t.me/shashIichok" target="_blank" class="contact-button">
+                <img src="TG.png" alt="Telegram">
+            </a>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 Event Connect. Все права защищены.</p>
+        <p style="text-align: center;">&copy; 2024 Event Connect. Все права защищены.</p>
     </footer>
 </body>
 </html>
