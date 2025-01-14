@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная - ИЭТР</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="scripts.js"></script>
+</head>
+<body>
+    <header>
+        <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+        <nav id="menu">
+            <a href="index.html">Главная</a>
+            <a href="maintenance.html">Список регламентных работ</a>
+            <a href="info.html">Справочная информация</a>
+            <a href="Support.html">Описание устранения неисправностей</a>			
+        </nav>
+    </header>
+
+    <div align="center">
+        <img src="PowerCheck.jpg" alt="Power Check Image"/>
+        <p class="par">Диагностика питания устройства Event Connect</p>
+        <button id="start" onclick="start()" class="button">Начать диагностику</button>
+        <button id="yes" class="button" onclick="stepYes()" type="button" hidden>Да</button>
+        <button id="no" class="button" onclick="stepNo()" type="button" hidden>Нет</button>
+        <button id="support" class="button" onclick="window.location.href = 'Contacts.html';" type="button" hidden>Тех.поддержка</button>
+        <button id="home" class="button" onclick="window.location.href = 'index.html';" type="button" hidden>На главную</button>
+    </div>
+
+
+    <script>
+var sch = 0;
+
+function start() {
+    sch = 1.00; // Начальный шаг
+    stepCheck();
+    document.getElementById("start").hidden = true;
+    document.getElementById("yes").hidden = false;
+    document.getElementById("no").hidden = false;
+}
+
+function stepYes() {
+    sch += 1.00; // Логическое увеличение шага при ответе "Да"
+    stepCheck();
+}
+
+function stepNo() {
+    sch += 0.10; // Логическое увеличение шага при ответе "Нет"
+    stepCheck();
+}
+
+function stepCheck() {
+    var par = document.querySelector('.par');
+
+    switch (sch) {
+        case 1.00:
+            par.innerHTML = 'Шаг 1. Устройство заряжено?';
+            break;
+        case 2.00:
+            par.innerHTML = 'Шаг 2. Проверен ли аккумулятор?';
+            break;
+        case 2.10:
+            par.innerHTML = 'Шаг 2.1. Проверьте и при необходимости замените аккумулятор.';
+            endWithSupport(); // Завершить и предложить обратиться в техподдержку
+            break;
+        case 3.00:
+            par.innerHTML = 'Шаг 3. Пробовали перезагрузить устройство?';
+            break;
+        case 3.10:
+            par.innerHTML = 'Шаг 3.1. Перезагрузите устройство.';
+            endWithSupport(); // Завершить и предложить обратиться в техподдержку
+            break;
+        case 4.00:
+            par.innerHTML = 'Шаг 4. Устройство работает корректно?';
+            break;
+        case 4.10:
+            par.innerHTML = 'Шаг 4.1. Обратитесь в техподдержку.';
+            endWithSupport(); // Завершить и предложить обратиться в техподдержку
+            break;
+        case 5.00:
+            par.innerHTML = 'Диагностика завершена. Устройство работает корректно.';
+            endSuccessfully(); // Завершить успешно
+            break;
+        default:
+            par.innerHTML = 'Неизвестный шаг. Перезагрузите диагностику.';
+            resetButtons();
+            document.getElementById("home").hidden = false;
+    }
+}
+
+function endSuccessfully() {
+    resetButtons();
+    document.getElementById("home").hidden = false;
+}
+
+function endWithSupport() {
+    resetButtons();
+    document.getElementById("support").hidden = false;
+}
+
+function resetButtons() {
+    document.getElementById("yes").hidden = true;
+    document.getElementById("no").hidden = true;
+}
+var sch = 0;
+
+function start() {
+    sch = 1.00; // Начальный шаг
+    stepCheck();
+    document.getElementById("start").hidden = true;
+    document.getElementById("yes").hidden = false;
+    document.getElementById("no").hidden = false;
+}
+
+function stepYes() {
+    sch += 1.00; // Логическое увеличение шага при ответе "Да"
+    stepCheck();
+}
+
+function stepNo() {
+    sch += 0.10; // Логическое увеличение шага при ответе "Нет"
+    stepCheck();
+}
+
+function stepCheck() {
+    var par = document.querySelector('.par');
+
+    switch (sch) {
+        case 1.00:
+            par.innerHTML = 'Шаг 1. Устройство заряжено?';
+            break;
+        case 2.00:
+            par.innerHTML = 'Шаг 2. Проверен ли аккумулятор?';
+            break;
+        case 2.10:
+            par.innerHTML = 'Шаг 2.1. Проверьте аккумулятор. Если проблема не устранена, замените его на новый.';
+            endWithSupport(); // Завершить и предложить обратиться в техподдержку
+            break;
+        case 3.00:
+            par.innerHTML = 'Шаг 3. Пробовали перезагрузить устройство?';
+            break;
+        case 3.10:
+            par.innerHTML = 'Шаг 3.1. Перезагрузите устройство. Если проблема сохраняется, обратитесь в техподдержку.';
+            endWithSupport(); // Завершить и предложить обратиться в техподдержку
+            break;
+        case 4.00:
+            par.innerHTML = 'Шаг 4. Устройство работает корректно?';
+            break;
+        case 4.10:
+            par.innerHTML = 'Шаг 4.1. Проблема не устранена. Обратитесь в техподдержку.';
+            endWithSupport(); // Завершить и предложить обратиться в техподдержку
+            break;
+        case 5.00:
+            par.innerHTML = 'Диагностика завершена. Устройство работает корректно.';
+            endSuccessfully(); // Завершить успешно
+            break;
+        default:
+            par.innerHTML = 'Диагностика завершена. Если проблема сохраняется, обратитесь в техподдержку.';
+            endWithSupport();
+    }
+}
+
+function endSuccessfully() {
+    resetButtons();
+    document.getElementById("home").hidden = false;
+}
+
+function endWithSupport() {
+    resetButtons();
+    document.getElementById("support").hidden = false;
+}
+
+function resetButtons() {
+    document.getElementById("yes").hidden = true;
+    document.getElementById("no").hidden = true;
+}
+
+    </script>
+
+    <section>
+        <h2>Причины неисправности питания</h2>
+        <h3>1. Проблемы с аккумулятором:</h3>
+        <ul>
+            <li><b>Износ батареи:</b> Постепенное ухудшение емкости батареи из-за длительного использования.</li>
+            <li><b>Некачественная зарядка:</b> Использование неподходящего зарядного устройства или кабеля может повредить аккумулятор.</li>
+            <li><b>Перегрев батареи:</b> Это часто связано с длительным подключением к зарядному устройству или высоким энергопотреблением.</li>
+        </ul>
+        <h3>2. Проблемы с устройством:</h3>
+        <ul>
+            <li><b>Скачки напряжения:</b> Резкие изменения в электрической сети могут вызвать сбои в системе питания.</li>
+            <li><b>Неисправность цепей питания:</b> Внутренние компоненты могут выйти из строя из-за перенапряжения или физического повреждения.</li>
+            <li><b>Плохие контакты:</b> Ослабленные или окислившиеся соединения в разъемах нарушают питание.</li>
+        </ul>
+        <h3>3. Внешние факторы:</h3>
+        <ul>
+            <li><b>Низкое качество источника питания:</b> Если розетка или внешний аккумулятор неисправны, это влияет на стабильность зарядки.</li>
+            <li><b>Погодные условия:</b> Высокая влажность или экстремальные температуры могут повлиять на работоспособность устройства.</li>
+        </ul>
+    </section>
+</body>
+</html>

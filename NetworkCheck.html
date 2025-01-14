@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Connect - Диагностика сети</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Event Connect</h1>
+        <nav>
+            <a href="index.html">Главная</a>
+            <a href="maintenance.html">Список регламентных работ</a>
+            <a href="info.html">Справочная информация</a>
+            <a href="Support.html">Описание устранения неисправностей</a>
+        </nav>
+    </header>
+    <main>
+        <section style="text-align: center;">
+            <img src="NetworkCheck.png" alt="Network Check Image" style="max-width: 40%; height: auto; margin: 1rem 0;" />
+            <p class="par">Диагностика сети устройства Event Connect</p>
+            
+            <div class="diagnostics-buttons">
+                <button id="start" class="button" onclick="start()" style="margin: 0.5rem;">Начать диагностику</button>
+                <button id="yes" class="button" onclick="stepYes()" hidden style="margin: 0.5rem;">Да</button>
+                <button id="no" class="button" onclick="stepNo()" hidden style="margin: 0.5rem;">Нет</button>
+                <button id="support" class="button" onclick="window.location.href = 'Contacts.html';" hidden style="margin: 0.5rem;">Тех.поддержка</button>
+                <button id="home" class="button" onclick="window.location.href = 'index.html';" hidden style="margin: 0.5rem;">На главную</button>
+            </div>
+        </section>
+
+        <section>
+            <h2>Причины неисправности сети</h2>
+            <h3>1. Внешние факторы:</h3>
+            <ul>
+                <li><b>Проблемы с провайдером:</b> Временные технические неполадки у поставщика услуг могут вызвать потерю связи.</li>
+                <li><b>Погодные условия:</b> Дождь, снег или сильный ветер иногда влияют на качество сигнала.</li>
+                <li><b>Перегруженность сети:</b> Если в одном регионе много пользователей, доступ к сети может замедлиться.</li>
+            </ul>
+            <h3>2. Аппаратные неисправности:</h3>
+            <ul>
+                <li><b>Слабый модем или маршрутизатор:</b> Устаревшее оборудование может не поддерживать современные стандарты связи.</li>
+                <li><b>Проблемы с антеннами:</b> Неправильная установка или повреждение антенн сети влияет на стабильность сигнала.</li>
+                <li><b>Разрывы в кабелях:</b> Некачественные кабели или их повреждения могут привести к сбоям в подключении.</li>
+            </ul>
+            <h3>3. Программные ошибки:</h3>
+            <ul>
+                <li><b>Неправильные настройки:</b> Ошибки в конфигурации DNS, IP-адресов или шлюзов нарушают доступ к сети.</li>
+                <li><b>Устаревшее ПО:</b> Старые драйверы или устаревшая прошивка устройства могут мешать подключению.</li>
+                <li><b>Сбои безопасности:</b> Некорректно настроенные межсетевые экраны или антивирусные программы могут блокировать доступ.</li>
+            </ul>
+        </section>
+    </main>
+
+    <script>
+        let step = 0;
+
+        function start() {
+            step = 1; // Начало диагностики
+            stepCheck();
+            document.getElementById("start").hidden = true;
+            document.getElementById("yes").hidden = false;
+            document.getElementById("no").hidden = false;
+        }
+
+        function stepYes() {
+            step += 1; // Переход к следующему шагу
+            stepCheck();
+        }
+
+        function stepNo() {
+            step += 0.1; // Переход к альтернативному шагу
+            stepCheck();
+        }
+
+        function stepCheck() {
+            const par = document.querySelector('.par');
+
+            switch (step) {
+                case 1:
+                    par.innerHTML = 'Шаг 1. Есть доступ к сети?';
+                    break;
+                case 2:
+                    par.innerHTML = 'Шаг 2. Программное обеспечение работает корректно?';
+                    break;
+                case 2.1:
+                    par.innerHTML = 'Пожалуйста, обновите или перезапустите программное обеспечение.';
+                    endWithSupport();
+                    break;
+                case 3:
+                    par.innerHTML = 'Шаг 3. Устройство подключено к сети?';
+                    break;
+                case 3.1:
+                    par.innerHTML = 'Проверьте подключение устройства к сети и перезапустите маршрутизатор.';
+                    endWithSupport();
+                    break;
+                case 4:
+                    par.innerHTML = 'Шаг 4. Проблема решена?';
+                    break;
+                case 4.1:
+                    par.innerHTML = 'Обратитесь в техподдержку.';
+                    endWithSupport();
+                    break;
+                case 5:
+                    par.innerHTML = 'Диагностика завершена. Устройство работает корректно.';
+                    endSuccessfully();
+                    break;
+                default:
+                    par.innerHTML = 'Диагностика завершена. Если проблема не устранена, обратитесь в техподдержку.';
+                    endWithSupport();
+                    break;
+            }
+        }
+
+        function endSuccessfully() {
+            resetButtons();
+            document.getElementById("home").hidden = false;
+        }
+
+        function endWithSupport() {
+            resetButtons();
+            document.getElementById("support").hidden = false;
+        }
+
+        function resetButtons() {
+            document.getElementById("yes").hidden = true;
+            document.getElementById("no").hidden = true;
+        }
+    </script>
+</body>
+</html>

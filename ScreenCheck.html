@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Connect - Диагностика экрана</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+
+        <nav>
+            <a href="index.html">Главная</a>
+            <a href="maintenance.html">Список регламентных работ</a>
+            <a href="info.html">Справочная информация</a>
+            <a href="Support.html">Описание устранения неисправностей</a>
+        </nav>
+    </header>
+    <main>
+<section style="text-align: center;">
+    <img src="ScreenCheck.jpg" alt="Ошибка экрана" style="max-width: 40%; height: auto; margin: 1rem 0;" />
+    <p class="par" style="font-size: 1.5rem; line-height: 1.8;">Диагностика экрана устройства Event Connect</p>
+    
+    <div class="diagnostics-buttons">
+        <button id="start" class="button" onclick="start()" style="margin: 0.5rem;">Начать диагностику</button>
+        <button id="yes" class="button" onclick="stepYes()" hidden style="margin: 0.5rem;">Да</button>
+        <button id="no" class="button" onclick="stepNo()" hidden style="margin: 0.5rem;">Нет</button>
+        <button id="support" class="button" onclick="window.location.href = 'Contacts.html';" hidden style="margin: 0.5rem;">Тех.поддержка</button>
+        <button id="home" class="button" onclick="window.location.href = 'index.html';" hidden style="margin: 0.5rem;">На главную</button>
+    </div>
+</section>
+
+
+        <section>
+            <h2>Причины неисправности экрана</h2>
+            <h3>1. Аппаратные дефекты:</h3>
+            <ul>
+                <li><b>Повреждение экрана:</b> Удары, падения или трещины на экране ухудшают его функциональность.</li>
+                <li><b>Проблемы со шлейфами:</b> Неплотные или поврежденные соединения между экраном и материнской платой могут вызывать мерцание или отсутствие изображения.</li>
+                <li><b>Износ подсветки:</b> С течением времени светодиоды подсветки могут терять яркость.</li>
+            </ul>
+            <h3>2. Программные проблемы:</h3>
+            <ul>
+                <li><b>Сбой драйверов экрана:</b> Некорректное или поврежденное программное обеспечение может приводить к артефактам или полной неработоспособности экрана.</li>
+                <li><b>Обновления прошивки:</b> Некачественные обновления системы иногда вызывают ошибки отображения.</li>
+                <li><b>Некорректные настройки яркости:</b> Иногда пользователь случайно изменяет настройки, делая экран нечитаемым.</li>
+            </ul>
+            <h3>3. Внешние воздействия:</h3>
+            <ul>
+                <li><b>Экстремальные температуры:</b> Перегрев или сильный холод могут временно отключить экран или повредить его элементы.</li>
+                <li><b>Попадание жидкости:</b> Влага может вызвать короткое замыкание в компонентах экрана.</li>
+            </ul>
+        </section>
+    </main>
+
+    <script>
+        let sch = 0;
+
+        function start() {
+            sch = 1.00;
+            stepCheck();
+            document.getElementById("start").hidden = true;
+            document.getElementById("yes").hidden = false;
+            document.getElementById("no").hidden = false;
+        }
+
+        function stepYes() {
+            sch += 1.00;
+            stepCheck();
+        }
+
+        function stepNo() {
+            sch += 0.10;
+            stepCheck();
+        }
+
+        function stepCheck() {
+            const par = document.querySelector('.par');
+
+            switch (sch) {
+                case 1.00:
+                    par.innerHTML = 'Шаг 1. Экран включен?';
+                    break;
+                case 2.00:
+                    par.innerHTML = 'Шаг 2. Экран не отображает данные. Устройство заряжено?';
+                    break;
+                case 2.10:
+                    par.innerHTML = 'Зарядите устройство.';
+                    hideButtons();
+                    document.getElementById("home").hidden = false;
+                    break;
+                case 3.00:
+                    par.innerHTML = 'Шаг 3. Все кабели подключены правильно?';
+                    break;
+                case 3.10:
+                    par.innerHTML = 'Проверьте и подключите кабели правильно.';
+                    hideButtons();
+                    document.getElementById("home").hidden = false;
+                    break;
+                case 4.00:
+                    par.innerHTML = 'Шаг 4. Заработало?';
+                    break;
+                case 5.00:
+                    par.innerHTML = 'Диагностика завершена. Устройство работает корректно.';
+                    hideButtons();
+                    document.getElementById("home").hidden = false;
+                    break;
+                case 4.10:
+                    par.innerHTML = 'Обратитесь в техподдержку.';
+                    hideButtons();
+                    document.getElementById("support").hidden = false;
+                    break;
+            }
+        }
+
+        function hideButtons() {
+            document.getElementById("yes").hidden = true;
+            document.getElementById("no").hidden = true;
+        }
+    </script>
+</body>
+</html>
