@@ -1,3 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<style>
+img {
+    max-width: 40%; /* Установите процент от ширины экрана */
+    height: auto; /* Сохраняйте пропорции изображения */
+    margin: 1rem 0;
+}
+</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная - ИЭТР</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="scripts.js"></script>
+</head>
+<body>
+    <header>
+        <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+        <nav id="menu">
+            <a href="index.html">Главная</a>
+            <a href="maintenance.html">Список регламентных работ</a>
+            <a href="info.html">Справочная информация</a>
+            <a href="Support.html">Описание устранения неисправностей</a>			
+        </nav>
+    </header>
+
+<body>
+
+    <div align="center">
+        <img src="GPSCheck.jpg" alt="GPS Module Check" />
+        <p class="par">Диагностика GPS модуля устройства Event Connect</p>
+        <button id="start" class="button" onclick="start()">Начать диагностику</button>
+        <button id="yes" class="button" onclick="stepYes()" hidden>Да</button>
+        <button id="no" class="button" onclick="stepNo()" hidden>Нет</button>
+        <button id="support" class="button" onclick="window.location.href = 'Contacts.html';" hidden>Тех.поддержка</button>
+        <button id="home" class="button" onclick="window.location.href = 'index.html';" hidden>На главную</button>
+    </div>
+
+    <script>
+        var sch = 0;
+
+        function start() {
+            sch = 1.00;
+            stepCheck();
+            document.getElementById("start").hidden = true;
+            document.getElementById("yes").hidden = false;
+            document.getElementById("no").hidden = false;
+        }
+
+        function stepYes() {
+            sch += 1.00;
+            stepCheck();
+        }
+
+        function stepNo() {
+            sch += 0.10;
+            stepCheck();
+        }
+
+        function stepCheck() {
+            var par = document.querySelector('.par');
+
+            switch (sch) {
+                case 1.00:
+                    par.innerHTML = 'Шаг 1. GPS модуль активен?';
+                    break;
+                case 2.00:
+                    par.innerHTML = 'Шаг 2. Есть доступ к открытой местности?';
+                    break;
+                case 2.10:
+                    par.innerHTML = 'Переместитесь в зону с доступом к GPS сигналу.';
+                    endWithSupport();
+                    break;
+                case 3.00:
+                    par.innerHTML = 'Шаг 3. Программное обеспечение работает корректно?';
+                    break;
+                case 3.10:
+                    par.innerHTML = 'Обновите программное обеспечение.';
+                    endWithSupport();
+                    break;
+                case 4.00:
+                    par.innerHTML = 'Шаг 4. Устройство работает корректно?';
+                    break;
+                case 4.10:
+                    par.innerHTML = 'Обратитесь в техподдержку.';
+                    endWithSupport();
+                    break;
+                case 5.00:
+                    par.innerHTML = 'Диагностика завершена. Устройство работает корректно.';
+                    endSuccessfully();
+                    break;
+                default:
+                    endWithSupport();
+            }
+        }
+
+        function endSuccessfully() {
+            resetButtons();
+            document.getElementById("home").hidden = false;
+        }
+
+        function endWithSupport() {
+            resetButtons();
+            document.getElementById("support").hidden = false;
+        }
+
+        function resetButtons() {
+            document.getElementById("yes").hidden = true;
+            document.getElementById("no").hidden = true;
+        }
+    </script>
 <section>
     <h2>Причины неисправности GPS модуля</h2>
     <h3>1. Слабый сигнал</h3>
@@ -100,3 +212,8 @@
         </li>
     </ul>
 </section>
+
+
+
+</body>
+</html>
