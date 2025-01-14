@@ -8,7 +8,6 @@
 </head>
 <body>
     <header>
-
         <nav>
             <a href="index.html">Главная</a>
             <a href="maintenance.html">Список регламентных работ</a>
@@ -17,19 +16,18 @@
         </nav>
     </header>
     <main>
-<section style="text-align: center;">
-    <img src="ScreenCheck.jpg" alt="Ошибка экрана" style="max-width: 40%; height: auto; margin: 1rem 0;" />
-    <p class="par" style="font-size: 1.5rem; line-height: 1.8;">Диагностика экрана устройства Event Connect</p>
-    
-    <div class="diagnostics-buttons">
-        <button id="start" class="button" onclick="start()" style="margin: 0.5rem;">Начать диагностику</button>
-        <button id="yes" class="button" onclick="stepYes()" hidden style="margin: 0.5rem;">Да</button>
-        <button id="no" class="button" onclick="stepNo()" hidden style="margin: 0.5rem;">Нет</button>
-        <button id="support" class="button" onclick="window.location.href = 'Contacts.html';" hidden style="margin: 0.5rem;">Тех.поддержка</button>
-        <button id="home" class="button" onclick="window.location.href = 'index.html';" hidden style="margin: 0.5rem;">На главную</button>
-    </div>
-</section>
-
+        <section style="text-align: center;">
+            <img src="ScreenCheck.jpg" alt="Ошибка экрана" style="max-width: 40%; height: auto; margin: 1rem 0;" />
+            <p class="par" style="font-size: 1.5rem; line-height: 1.8;">Диагностика экрана устройства Event Connect</p>
+            
+            <div class="diagnostics-buttons">
+                <button id="start" class="button" onclick="start()" style="margin: 0.5rem;">Начать диагностику</button>
+                <button id="yes" class="button" onclick="stepYes()" hidden style="margin: 0.5rem;">Да</button>
+                <button id="no" class="button" onclick="stepNo()" hidden style="margin: 0.5rem;">Нет</button>
+                <button id="support" class="button" onclick="window.location.href = 'Contacts.html';" hidden style="margin: 0.5rem;">Тех.поддержка</button>
+                <button id="home" class="button" onclick="window.location.href = 'index.html';" hidden style="margin: 0.5rem;">На главную</button>
+            </div>
+        </section>
 
         <section>
             <h2>Причины неисправности экрана</h2>
@@ -82,38 +80,48 @@
                     par.innerHTML = 'Шаг 1. Экран включен?';
                     break;
                 case 2.00:
-                    par.innerHTML = 'Шаг 2. Экран не отображает данные. Устройство заряжено?';
+                    par.innerHTML = 'Шаг 2. Устройство заряжено?';
                     break;
                 case 2.10:
-                    par.innerHTML = 'Зарядите устройство.';
-                    hideButtons();
-                    document.getElementById("home").hidden = false;
+                    par.innerHTML = 'Пожалуйста, зарядите устройство. Затем повторите диагностику.';
+                    endWithSupport();
                     break;
                 case 3.00:
                     par.innerHTML = 'Шаг 3. Все кабели подключены правильно?';
                     break;
                 case 3.10:
-                    par.innerHTML = 'Проверьте и подключите кабели правильно.';
-                    hideButtons();
-                    document.getElementById("home").hidden = false;
+                    par.innerHTML = 'Проверьте и подключите кабели правильно. Если проблема сохраняется, обратитесь в техподдержку.';
+                    endWithSupport();
                     break;
                 case 4.00:
-                    par.innerHTML = 'Шаг 4. Заработало?';
+                    par.innerHTML = 'Шаг 4. Проблема решена?';
+                    break;
+                case 4.10:
+                    par.innerHTML = 'Проблема не устранена. Обратитесь в техподдержку.';
+                    endWithSupport();
                     break;
                 case 5.00:
                     par.innerHTML = 'Диагностика завершена. Устройство работает корректно.';
-                    hideButtons();
-                    document.getElementById("home").hidden = false;
+                    endSuccessfully();
                     break;
-                case 4.10:
-                    par.innerHTML = 'Обратитесь в техподдержку.';
-                    hideButtons();
-                    document.getElementById("support").hidden = false;
+                default:
+                    par.innerHTML = 'Диагностика завершена. Если проблема сохраняется, обратитесь в техподдержку.';
+                    endWithSupport();
                     break;
             }
         }
 
-        function hideButtons() {
+        function endSuccessfully() {
+            resetButtons();
+            document.getElementById("home").hidden = false;
+        }
+
+        function endWithSupport() {
+            resetButtons();
+            document.getElementById("support").hidden = false;
+        }
+
+        function resetButtons() {
             document.getElementById("yes").hidden = true;
             document.getElementById("no").hidden = true;
         }
